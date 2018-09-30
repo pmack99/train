@@ -5,9 +5,12 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!--Link the extrnal css-->
   <link href="css/style.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
@@ -124,111 +127,13 @@
         <br>
       </div>
 
-
+   
   <!--JavaScript at end of body for optimized loading-->
 <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDafc-PVqA-iPHeXpynJhqdt9z92Z_fIwM",
-    authDomain: "pmack-2.firebaseapp.com",
-    databaseURL: "https://pmack-2.firebaseio.com",
-    projectId: "pmack-2",
-    storageBucket: "pmack-2.appspot.com",
-    messagingSenderId: "151596507054"
-  };
-  firebase.initializeApp(config);
+<script src="https://code.jquery.com/jquery.js"></script>           
+<script type="text/javascript" src="js/app.js"></script>
 
-
-var database = firebase.database();
-
-var routeName = "";
-var destination = "";
-var frequency = "";
-var nextArrival = "";
-var trainTime = "";
-var time = "";
-var minutesAway = "";
-var nextArrival = "";
-
-$(".btn").on("click", function (event) {
-    event.preventDefault();
-
-    // Grabbed values from text boxes
-    routeName = $("#routeName").val().trim();
-    destination = $("#destination").val().trim();
-    frequency = $("#frequency").val().trim();
-    trainTime = $("#trainTime").val().trim();
-
-    // Code for handling the push
-    database.ref().push({
-        routeName: routeName,
-        destination: destination,
-        frequency: frequency,
-        trainTime: trainTime,
-        time: firebase.database.ServerValue.TIMESTAMP,
-        
-        //minutesAway: (time * something??)
-    });
-
-    
-    // ChronoUnit.MONTHS.between(startDate, dateAdded)
-
-    database.ref().on("child_added", function (snapshot) {
-        // storing the snapshot.val() in a variable for convenience
-        var sv = snapshot.val();
-        // Console.loging the last user's data
-        console.log(sv.routeName);
-        console.log(sv.destination);
-        console.log(sv.frequency);
-        console.log(sv.trainTime);
-        //console.log(sv.minutesAway);
-        //console.log(sv.nextArrival);
-
-        // Change the HTML to reflect
-        $("#table").append(
-
-        function createRow () {
-            // Create a new table row element
-            var tRow = $("<tr>");
-
-            // Methods run on jQuery selectors return the selector they we run on
-            // This is why we can create and save a reference to a td in the same statement we update its text
-            var routeN = $("<td>").text(sv.routeName);
-            var dest = $("<td>").text(sv.destination);
-            var freq = $("<td>").text(sv.frequency);
-            var nextA = $("<td>").text(sv.nextArrival);
-            var minutesA = $("<td>").text(sv.minutesAway);
-            
-
-            // Append the newly created table data to the table row
-            tRow.append(routeN, dest, freq, nextA, minutesA );
-            // Append the table row to the table body
-            $("tbody").append(tRow);
-        });
-
-        createRow();
-
-
-
-        // "<div><span>" + snapshot.val().employeeName + "</span><span>" + snapshot.val().role + "</span><span>" + snapshot.val().startDate + "</span><span>" + snapshot.val().monthsWorked + "</span><span>" + snapshot.val().monthlyRate + "</span><span>" + snapshot.val().totalBilled + "</span></div>")
-        // Handle the errors
-    }); 
-    
-})
-
-
-
-
-
-
-
-
-</script>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
+
 
 </html>
