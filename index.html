@@ -73,83 +73,62 @@
 
     <br>
 
-    <p class="collection-header">
-      <h4>Add a Train</h4>
-    </p>
 
-    <div class="container">
-      <form class="col s12">
-        <div class="row">
-          <div class="input-field col s3">
-            <p class="titles">
-              <h6>Train Name</h6>
-            </p>
+        <h4>Add a Train</h4>
+      
+        <form>
+      
+          <div class="group">      
+            <input type="text" id= "routeName"required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Route Name</label>
+          </div>
+      
+          <div class="group">      
+            <input type="text" id= "destination" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Destination</label>
           </div>
 
-          <div class="input-field col s3">
-            <p class="titles">
-              <h6>Destination</h6>
-            </p>
-          </div>
-
-          <div class="input-field col s3">
-            <p class="titles">
-              <h6>Train Time</h6>
-            </p>
-          </div>
-          <div class="input-field col s3">
-            <p class="titles">
-              <h6>Frequency</h6>
-            </p>
-          </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="input-field box">
-
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s3">
-              <input id="trainName" type="text" class="validate">
-
+          <div class="group">      
+              <input type="text" id= "firstTrain"required>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>First Train Time</label>
             </div>
-            <div class="input-field col s3">
-              <input id="destination" type="text" class="validate">
 
-            </div>
-            <div class="input-field col s3">
-              <input id="trainTime" type="text" class="validate">
-
-            </div>
-            <div class="input-field col s3">
-              <input id="frequency" type="text" class="validate">
-
-            </div>
+          <div class="group">      
+              <input type="text" id= "frequency" required>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Frequency</label>
           </div>
+      
         </form>
+
+        <br>
+        <br>
+        <br>
+
+      
+        <button class="btn waves-effect waves-light" type="submit" id="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+          </button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
       </div>
 
-    </div>
-    <a class="waves-effect waves-light btn">Submit</a>
-
-  </div>
-
-
-
-  </div>
-
-  <br>
-  <br>
-  <br>
-  <br>
-
-
+  
 
   <!--JavaScript at end of body for optimized loading-->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 
