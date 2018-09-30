@@ -12,12 +12,15 @@ var database = firebase.database();
 
 var routeName = "";
 var destination = "";
+var firstTrainTime = "";
 var frequency = "";
 var nextArrival = "";
-var firstTrainTime = "";
-var currentTime = moment();
 var minutesAway = "";
-var nextArrival = "";
+var currentTime = "";
+var firstTimeConverted = "";
+var diffTime = "";
+var tRemainder = "";
+
 
 $("#submit").on("click", function(event) {
   event.preventDefault();
@@ -28,10 +31,16 @@ $("#submit").on("click", function(event) {
   frequency = $("#frequency").val();
   firstTrainTime = $("#firstTrain").val();
 
-  console.log(routeName);
-  console.log(destination);
-  console.log(frequency);
-  console.log(firstTrainTime);
+
+  firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
+  currentTime = moment();
+  diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+  tRemainder = diffTime % frequency;
+  minutesTillTrain = frequency - tRemainder;
+  minutesAway = moment().add(minutesTillTrain, "minutes");
+  nextArrival = moment(minutesAway).format("hh:mm");
+
+
 
   // Code for handling the push
   database.ref().push({
@@ -39,9 +48,9 @@ $("#submit").on("click", function(event) {
     destination: destination,
     frequency: frequency,
     firstTrainTime: firstTrainTime,
-    time: firebase.database.ServerValue.TIMESTAMP
-    //nextArrival = moment().diff(moment(firstTrainTime), "minutes"),
-    //minutesAway = moment(firstTime, "HH:mm").subtract(1, "years")
+    time: firebase.database.ServerValue.TIMESTAMP,
+    nextArrival: nextArrival,
+    //minutesAway: minutesAway
   });
 
   // ChronoUnit.MONTHS.between(startDate, dateAdded)
@@ -51,12 +60,12 @@ $("#submit").on("click", function(event) {
   database.ref().on("child_added", function(childSnapshot) {
     // storing the snapshot.val() in a variable for convenience
     var sv = childSnapshot.val();
+    
     // Console.loging the last user's data
-    console.log(sv.routeName);
-    console.log(sv.destination);
-    console.log(sv.frequency);
-    //console.log(sv.firstTrainTime);
-    //console.log(sv.nextArrival);
+    //console.log(sv.routeName);
+    //console.log(sv.destination);
+    //console.log(sv.frequency);
+    console.log(sv.nextArrival);
     //console.log(sv.minutesAway);
 
     // Change the HTML to reflect
@@ -67,9 +76,9 @@ $("#submit").on("click", function(event) {
     var newRow = $("<tr>").append(
       $("<td>").text(sv.routeName),
       $("<td>").text(sv.destination),
-      $("<td>").text(sv.frequency)
-      //$("<td>").text(nextArrival),
-      //  $("<td>").text(minutes)
+      $("<td>").text(sv.frequency),
+      $("<td>").text(sv.nextArrival),
+      $("<td>").text(sv.minutesAway)
     );
     // Append the table row to the table body
      $("tbody").append(newRow);
