@@ -16,7 +16,7 @@ var routeName = "";
 var destination = "";
 var frequency = "";
 var nextArrival = "";
-var firstTime = "";
+var firstTrainTime = "";
 var currentTime = moment();
 var minutesAway = "";
 var nextArrival = "";
@@ -24,26 +24,27 @@ var nextArrival = "";
 $("#submit").on("click", function (event) {
     event.preventDefault();
 
-    console.log(routeName);
-    console.log(destination);
-    console.log(frequency);
-    console.log(trainTime);
-
     // Grabbed values from text boxes
     routeName = $("#routeName").val();
     destination = $("#destination").val();
     frequency = $("#frequency").val();
-    firstTime = $("#trainTime").val();
+    firstTrainTime = $("#firstTrain").val(); 
+
+    console.log(routeName);
+    console.log(destination);
+    console.log(frequency);
+    console.log(firstTrainTime);
+
 
     // Code for handling the push
     database.ref().push({
         routeName: routeName,
         destination: destination,
         frequency: frequency,
-        firstTime: firstTime,
+        firstTrainTime: firstTrainTime,
         time: firebase.database.ServerValue.TIMESTAMP,
-        nextArrival = moment().diff(moment(firstTime), "minutes"),
-        minutesAway = moment(firstTime, "HH:mm").subtract(1, "years")
+        //nextArrival = moment().diff(moment(firstTime), "minutes"),
+        //minutesAway = moment(firstTime, "HH:mm").subtract(1, "years")
         
     });
 
@@ -57,9 +58,9 @@ $("#submit").on("click", function (event) {
         console.log(sv.routeName);
         console.log(sv.destination);
         console.log(sv.frequency);
-        console.log(sv.trainTime);
-        console.log(sv.nextArrival);
-        console.log(sv.minutesAway);
+        console.log(sv.firstTrainTime);
+        //console.log(sv.nextArrival);
+        //console.log(sv.minutesAway);
         
 
         // Change the HTML to reflect
@@ -74,14 +75,14 @@ $("#submit").on("click", function (event) {
             var routeN = $("<td>").text(sv.routeName);
             var dest = $("<td>").text(sv.destination);
             var freq = $("<td>").text(sv.frequency);
-            var nextA = $("<td>").text(sv.nextArrival);
-            var minutesA = $("<td>").text(sv.minutesAway);
+            //var nextA = $("<td>").text(sv.nextArrival);
+            //var minutesA = $("<td>").text(sv.minutesAway);
             
 
             // Append the newly created table data to the table row
-            tRow.append(routeN, dest, freq, nextA, minutesA );
+            tRow.append(routeN, dest, freq);
             // Append the table row to the table body
-            $("tbody").append(tRow);
+            $(".tbody").append(tRow);
         });
 
         createRow();
