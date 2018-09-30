@@ -20,6 +20,7 @@ var currentTime = "";
 var firstTimeConverted = "";
 var diffTime = "";
 var tRemainder = "";
+var minutesTillTrain ="";
 
 
 $("#submit").on("click", function(event) {
@@ -32,15 +33,16 @@ $("#submit").on("click", function(event) {
   firstTrainTime = $("#firstTrain").val();
 
 
-  firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
   currentTime = moment();
+  firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
   diffTime = moment().diff(moment(firstTimeConverted), "minutes");
   tRemainder = diffTime % frequency;
   minutesTillTrain = frequency - tRemainder;
   minutesAway = moment().add(minutesTillTrain, "minutes");
   nextArrival = moment(minutesAway).format("hh:mm");
 
-
+console.log(diffTime);
+console.log(tRemainder);
 
   // Code for handling the push
   database.ref().push({
@@ -51,6 +53,7 @@ $("#submit").on("click", function(event) {
     time: firebase.database.ServerValue.TIMESTAMP,
     nextArrival: nextArrival,
     //minutesAway: minutesAway
+
   });
 
   // ChronoUnit.MONTHS.between(startDate, dateAdded)
@@ -60,13 +63,13 @@ $("#submit").on("click", function(event) {
   database.ref().on("child_added", function(childSnapshot) {
     // storing the snapshot.val() in a variable for convenience
     var sv = childSnapshot.val();
-    
+
     // Console.loging the last user's data
     //console.log(sv.routeName);
     //console.log(sv.destination);
     //console.log(sv.frequency);
     console.log(sv.nextArrival);
-    //console.log(sv.minutesAway);
+    console.log(sv.minutesAway);
 
     // Change the HTML to reflect
     //$(".table").append(function createRow() {
