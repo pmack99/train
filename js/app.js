@@ -40,14 +40,6 @@ $("#submit").on("click", function(event) {
     .val()
     .trim();
 
-  // Code for handling the push
-  database.ref().push({
-    routeName: routeName,
-    destination: destination,
-    frequency: frequency,
-    firstTrainTime: firstTrainTime,
-
-  });
 
   // Current Time
   currentTime = moment();
@@ -69,22 +61,32 @@ $("#submit").on("click", function(event) {
   minutesTillTrain = frequency - tRemainder;
   console.log("MINUTES TILL TRAIN: " + minutesTillTrain);
 
-  minutesAway = moment().add(minutesTillTrain, "minutes");
+  var minutesAway = moment().add(minutesTillTrain, "minutes");
   console.log("MINUTES Away: " + minutesAway);
   
   // Next Train
   var nextArrivalX = moment().add(minutesTillTrain, "minutes");
-  console.log("ARRIVAL TIME: " + moment(nextArrivalX).format("hh:mm"));
 
-  nextArrival = moment(nextArrivalX).format("hh:mm");
+  var nextArrival = moment(nextArrivalX).format("hh:mm");
   console.log("next Arrival: "+ nextArrival);
+
+
+  // Code for handling the push
+  database.ref().push({
+    routeName: routeName,
+    destination: destination,
+    frequency: frequency,
+    firstTrainTime: firstTrainTime,
+    nextArrival: nextArrival,
+    //minutesAway: minutesAway
+  });
 
   database.ref().on("child_added", function(childSnapshot) {
     // storing the snapshot.val() in a variable for convenience
     var sv = childSnapshot.val();
 
     // Console.loging the last user's data
-    console.log(sv.routeName);
+    //console.log(sv.routeName);
     //console.log(sv.destination);
     //console.log(sv.frequency);
     //console.log(sv.nextArrival);
@@ -99,8 +101,8 @@ $("#submit").on("click", function(event) {
       $("<td>").text(sv.routeName),
       $("<td>").text(sv.destination),
       $("<td>").text(sv.frequency),
-      $("<td>").text(sv.minutesAway),
-      $("<td>").text(sv.nextArrival)
+      $("<td>").text(sv.nextArrival),
+      $("<td>").text(sv.minutesAway)
     );
     // Append the table row to the table body
     $("tbody").append(newRow);
