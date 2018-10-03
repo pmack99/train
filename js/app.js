@@ -123,5 +123,14 @@ $("#submit").on("click", function(event) {
     // Append the table row to the table body
     $("tbody").append(newRow);
     //$("#table").append(newRow);
+
+    $("#routeName").val("");
+		$("#destination").val("");
+		$("#frequency").val("");
+		$("#firstTrain").val("");
+
+		// Prevents page from refreshing
+    return false;
+    
   });
 });
