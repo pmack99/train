@@ -29,7 +29,6 @@ var minutesAway = "";
 $("#submit").on("click", function (event) {
   event.preventDefault();
 
-  // Grabbed values from text boxes
   routeName = $("#routeName")
     .val()
     .trim();
@@ -43,22 +42,6 @@ $("#submit").on("click", function (event) {
     .val()
     .trim();
 
-
-
-  // Minute Until Train
-  //minutesTillTrain = frequency - tRemainder;
-  //console.log("MINUTES TILL TRAIN: " + minutesTillTrain);
-
-  //minutesAway = moment().add(minutesTillTrain, "minutes");
-  //console.log("MINUTES Away: " + minutesAway);
-
-  // Next Train
-  //var nextArrivalX = moment().add(minutesTillTrain, "minutes");
-
-  //var nextArrival = moment(nextArrivalX).format("hh:mm");
-  //console.log("next Arrival: "+ nextArrival);
-
-  // Code for handling the push
   database.ref().push({
     routeName: routeName,
     destination: destination,
@@ -100,17 +83,6 @@ database.ref().on("child_added", function (childSnapshot) {
 
   var nextArrival = moment(nextTrain).format("hh:mm");
 
-  // Console.loging the last user's data
-  //console.log(sv.routeName);
-  //console.log(sv.destination);
-  //console.log(sv.frequency);
-  //console.log(sv.nextArrival);
-  //console.log(sv.minutesAway);
-
-  // Change the HTML to reflect
-  //$(".table").append(function createRow() {
-  // Create a new table row element
-  //var tRow = $("<tr>");
 
   var newRow = $("<tr>").append(
     $("<td>").text(sv.routeName),
