@@ -26,7 +26,7 @@ var minutesTillTrain = "";
 var arrivalTime = "";
 var minutesAway = "";
 
-$("#submit").on("click", function(event) {
+$("#submit").on("click", function (event) {
   event.preventDefault();
 
   // Grabbed values from text boxes
@@ -92,44 +92,44 @@ $("#submit").on("click", function(event) {
     firstTrainTime: firstTrainTime,
     nextArrival: nextArrival,
     minutesAway: minutesAway
-    
-  });
 
-  database.ref().limitToLast(1).on("child_added", function(childSnapshot) {
-    // storing the snapshot.val() in a variable for convenience
-    var sv = childSnapshot.val();
-
-    // Console.loging the last user's data
-    //console.log(sv.routeName);
-    //console.log(sv.destination);
-    //console.log(sv.frequency);
-    //console.log(sv.nextArrival);
-    //console.log(sv.minutesAway);
-
-    // Change the HTML to reflect
-    //$(".table").append(function createRow() {
-    // Create a new table row element
-    //var tRow = $("<tr>");
-
-    var newRow = $("<tr>").append(
-      $("<td>").text(sv.routeName),
-      $("<td>").text(sv.destination),
-      $("<td>").text(sv.frequency),
-      $("<td>").text(sv.nextArrival),
-      $("<td>").text(sv.minutesAway)
-    );
-    // Append the table row to the table body
-    $("tbody").append(newRow);
-    //$("#table").append(newRow);
-
-    $("#routeName").val("");
-    $("#destination").val("");
-    $("#frequency").val("");
-    $("#firstTrain").val("");
-
-    // Prevents page from refreshing
-    return false;
   });
 });
 
+database.ref().on("child_added", function (childSnapshot) {
+  // storing the snapshot.val() in a variable for convenience
+  var sv = childSnapshot.val();
 
+  
+
+  // Console.loging the last user's data
+  //console.log(sv.routeName);
+  //console.log(sv.destination);
+  //console.log(sv.frequency);
+  //console.log(sv.nextArrival);
+  //console.log(sv.minutesAway);
+
+  // Change the HTML to reflect
+  //$(".table").append(function createRow() {
+  // Create a new table row element
+  //var tRow = $("<tr>");
+
+  var newRow = $("<tr>").append(
+    $("<td>").text(sv.routeName),
+    $("<td>").text(sv.destination),
+    $("<td>").text(sv.frequency),
+    $("<td>").text(sv.nextArrival),
+    $("<td>").text(sv.minutesAway)
+  );
+  // Append the table row to the table body
+  $("tbody").append(newRow);
+  //$("#table").append(newRow);
+
+  $("#routeName").val("");
+  $("#destination").val("");
+  $("#frequency").val("");
+  $("#firstTrain").val("");
+
+  // Prevents page from refreshing
+  return false;
+});
