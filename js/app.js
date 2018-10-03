@@ -92,6 +92,7 @@ $("#submit").on("click", function(event) {
     firstTrainTime: firstTrainTime,
     nextArrival: nextArrival,
     minutesAway: minutesAway
+    
   });
 
   database.ref().limitToLast(1).on("child_added", function(childSnapshot) {
