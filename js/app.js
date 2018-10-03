@@ -6,7 +6,9 @@ var config = {
   storageBucket: "",
   messagingSenderId: "677237502602"
 };
+
 firebase.initializeApp(config);
+
 
 var database = firebase.database();
 
@@ -41,7 +43,6 @@ $("#submit").on("click", function(event) {
     .val()
     .trim();
 
-
   // Current Time
   currentTime = moment();
   console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
@@ -58,19 +59,17 @@ $("#submit").on("click", function(event) {
   tRemainder = diffTime % frequency;
   console.log("tRemainder: " + tRemainder);
 
+  // Minute Until Train
+  var tMinutesTillTrain = frequency - tRemainder;
+  console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
-      // Minute Until Train
-      var tMinutesTillTrain = frequency - tRemainder;
-      console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-  
-      minutesAway = tMinutesTillTrain;
+  minutesAway = tMinutesTillTrain;
 
-      // Next Train
-      var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+  // Next Train
+  var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+  console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
-      var nextArrival = moment(nextTrain).format("hh:mm");
-
+  var nextArrival = moment(nextTrain).format("hh:mm");
 
   // Minute Until Train
   //minutesTillTrain = frequency - tRemainder;
@@ -78,13 +77,12 @@ $("#submit").on("click", function(event) {
 
   //minutesAway = moment().add(minutesTillTrain, "minutes");
   //console.log("MINUTES Away: " + minutesAway);
-  
+
   // Next Train
   //var nextArrivalX = moment().add(minutesTillTrain, "minutes");
 
   //var nextArrival = moment(nextArrivalX).format("hh:mm");
   //console.log("next Arrival: "+ nextArrival);
-
 
   // Code for handling the push
   database.ref().push({
@@ -94,10 +92,9 @@ $("#submit").on("click", function(event) {
     firstTrainTime: firstTrainTime,
     nextArrival: nextArrival,
     minutesAway: minutesAway
-    
   });
 
-  database.ref().on("child_added", function(childSnapshot) {
+  database.ref().limitToLast(1).on("child_added", function(childSnapshot) {
     // storing the snapshot.val() in a variable for convenience
     var sv = childSnapshot.val();
 
@@ -125,12 +122,13 @@ $("#submit").on("click", function(event) {
     //$("#table").append(newRow);
 
     $("#routeName").val("");
-		$("#destination").val("");
-		$("#frequency").val("");
-		$("#firstTrain").val("");
+    $("#destination").val("");
+    $("#frequency").val("");
+    $("#firstTrain").val("");
 
-		// Prevents page from refreshing
+    // Prevents page from refreshing
     return false;
-    
   });
 });
+
+
