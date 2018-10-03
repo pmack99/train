@@ -15,13 +15,14 @@ var destination = "";
 var firstTrainTime = "";
 var frequency = "";
 var nextArrival = "";
-var minutesAway = "";
+var tMinutesTillTrain = 0;
 var currentTime = "";
 var firstTimeConverted = "";
 var diffTime = "";
 var tRemainder = "";
 var minutesTillTrain = "";
 var arrivalTime = "";
+var minutesAway = "";
 
 $("#submit").on("click", function(event) {
   event.preventDefault();
@@ -57,18 +58,32 @@ $("#submit").on("click", function(event) {
   tRemainder = diffTime % frequency;
   console.log("tRemainder: " + tRemainder);
 
-  // Minute Until Train
-  minutesTillTrain = frequency - tRemainder;
-  console.log("MINUTES TILL TRAIN: " + minutesTillTrain);
 
-  var minutesAway = moment().add(minutesTillTrain, "minutes");
-  console.log("MINUTES Away: " + minutesAway);
+      // Minute Until Train
+      var tMinutesTillTrain = frequency - tRemainder;
+      console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+  
+      minutesAway = tMinutesTillTrain;
+
+      // Next Train
+      var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+      var nextArrival = moment(nextTrain).format("hh:mm");
+
+
+  // Minute Until Train
+  //minutesTillTrain = frequency - tRemainder;
+  //console.log("MINUTES TILL TRAIN: " + minutesTillTrain);
+
+  //minutesAway = moment().add(minutesTillTrain, "minutes");
+  //console.log("MINUTES Away: " + minutesAway);
   
   // Next Train
-  var nextArrivalX = moment().add(minutesTillTrain, "minutes");
+  //var nextArrivalX = moment().add(minutesTillTrain, "minutes");
 
-  var nextArrival = moment(nextArrivalX).format("hh:mm");
-  console.log("next Arrival: "+ nextArrival);
+  //var nextArrival = moment(nextArrivalX).format("hh:mm");
+  //console.log("next Arrival: "+ nextArrival);
 
 
   // Code for handling the push
@@ -78,7 +93,8 @@ $("#submit").on("click", function(event) {
     frequency: frequency,
     firstTrainTime: firstTrainTime,
     nextArrival: nextArrival,
-    //minutesAway: minutesAway
+    minutesAway: minutesAway
+    
   });
 
   database.ref().on("child_added", function(childSnapshot) {
